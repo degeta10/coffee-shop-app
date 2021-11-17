@@ -8,10 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
+use Bavix\Wallet\Traits\HasWalletFloat;
+use Bavix\Wallet\Interfaces\Wallet;
 
-class User extends Authenticatable
+class User extends Authenticatable implements Wallet
 {
-    use Notifiable, HasRoles;
+    use Notifiable, HasRoles, HasWalletFloat;
 
     /**
      * The attributes that are mass assignable.
