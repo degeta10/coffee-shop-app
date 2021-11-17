@@ -15,7 +15,8 @@
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "2.4",
-        "spatie/laravel-permission": "^5.4"
+        "spatie/laravel-permission": "^5.4",
+        "spatie/laravel-sluggable": "^2.2"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
