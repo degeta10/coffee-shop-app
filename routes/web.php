@@ -20,6 +20,8 @@ Auth::routes();
 /* CUSTOMER ROUTES */
 Route::group(['middleware' => ['auth', 'role:customer']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/account/profile', 'AccountController@profile')->name('account.profile');
+    Route::patch('/account/profile/update', 'AccountController@updateProfile')->name('account.profile.update');
     Route::get('/account/wallet', 'AccountController@wallet')->name('account.wallet');
     Route::patch('/account/wallet/update', 'AccountController@updateWallet')->name('account.wallet.update');
 });

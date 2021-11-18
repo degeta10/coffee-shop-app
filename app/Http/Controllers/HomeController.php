@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except(['admin', 'welcome']);
+        $this->middleware('auth')->except(['welcome']);
     }
 
     /**
@@ -34,8 +34,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $balance = Auth::user()->balanceFloat;
-        return view('home', compact('balance'));
+        return view('home');
     }
 
     /**

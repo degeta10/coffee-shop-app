@@ -19,7 +19,6 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
 </head>
 
 <body>
@@ -56,7 +55,7 @@
                         @else
                             <li class="nav-item">
                                 <a class="nav-link"
-                                    href="{{ route('account.wallet') }}">Balance:&nbsp;{{ $balance }}</a>
+                                    href="{{ route('account.wallet') }}">Balance:&nbsp;{{ Auth::user()->balanceFloat }}</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -65,6 +64,11 @@
 
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                                    <a class="dropdown-item" href="{{ route('account.profile') }}">
+                                        {{ __('Profile') }}
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}

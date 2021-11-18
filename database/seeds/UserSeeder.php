@@ -24,14 +24,18 @@ class UserSeeder extends Seeder
         $admin->assignRole('admin');
 
         /* CUSTOMER ACCOUNT */
-        $user = User::create([
+        $customer = User::create([
             'name' => 'Customer',
             'email' => 'customer@coffee.com',
             'email_verified_at' => now(),
             'password' => 'qwe@123',
+            'gender' => 'male',
+            'dob' => '1990-01-01',
+            'phone' => '1111111111',
+            'address' => 'Lorem ipsum addresss',
             'remember_token' => Str::random(10),
         ]);
-        $user->assignRole('customer');
+        $customer->assignRole('customer');
 
         factory(User::class, 10)->create()->each(function ($user) {
             $user->assignRole('customer');
