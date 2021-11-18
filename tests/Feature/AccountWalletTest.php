@@ -6,7 +6,6 @@ use App\Http\Middleware\VerifyCsrfToken;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Artisan;
 use RoleSeeder;
 use Tests\TestCase;
 
@@ -37,6 +36,7 @@ class AccountWalletTest extends TestCase
      */
     public function test_only_logged_in_customer_users_can_see_wallet()
     {
+        $this->withoutExceptionHandling();
         $this->actingAs(factory(User::class)->create()->assignRole('customer'));
         $this->get('/account/wallet')->assertOk();
     }

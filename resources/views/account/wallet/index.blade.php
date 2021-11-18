@@ -16,7 +16,7 @@
                                     class="col-md-4 col-form-label text-md-right">{{ __('Current Balance') }}</label>
                                 <div class="col-md-6">
                                     <input id="current_balance" type="text" class="form-control"
-                                        value="{{ $balance }}" readonly>
+                                        value="{{ auth()->user()->balanceFloat }}" readonly>
                                 </div>
                             </div>
 
