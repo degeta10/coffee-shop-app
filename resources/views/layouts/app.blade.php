@@ -55,7 +55,8 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <span class="nav-link">Balance:&nbsp;&#8377;&nbsp;{{ $balance }}</span>
+                                <a class="nav-link"
+                                    href="{{ route('account.wallet') }}">Balance:&nbsp;{{ $balance }}</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -82,6 +83,7 @@
         </nav>
 
         <main class="py-4">
+            @include('partials.user')
             @yield('content')
         </main>
     </div>
