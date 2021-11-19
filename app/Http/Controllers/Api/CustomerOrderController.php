@@ -22,7 +22,9 @@ class CustomerOrderController extends Controller
      */
     public function index()
     {
-        $query = Order::where('customer_id', auth()->user()->id);
+        $query = Order::ListForCustomer()->with(['product' => function ($q) {
+            $q->select('id', 'title');
+        }])->where('customer_id', auth()->user()->id);
         $query->when(request('search_key', false), function ($q, $search_key) {
             return $q->whereHas('product', function ($q1) use ($search_key) {
                 $q1->where('title', "like", "%$search_key%")
