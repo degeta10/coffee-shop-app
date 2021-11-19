@@ -28,7 +28,7 @@ class SignupRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'                      => 'required|string|max:255',
+            'name'                      => 'required|string|max:180',
             'email'                     => 'required|string|email|max:255|unique:users',
             'password'                  => 'required|string|confirmed|min:8',
             'password_confirmation'     => 'required|min:8',
@@ -40,7 +40,7 @@ class SignupRequest extends FormRequest
         return [
             'name.required'                     => 'Name is required',
             'name.string'                       => 'Name must be valid',
-            'name.max'                          => 'Name can have max 255 characters',
+            'name.max'                          => 'Name can have max 180 characters',
             'email.required'                    => 'Email is required',
             'email.unique'                      => 'Email already registered. Please login to your account.',
             'email.max'                         => 'Email can have max 255 characters',

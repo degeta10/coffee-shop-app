@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Auth\LoginRequest;
 use App\Http\Requests\Api\Auth\SignupRequest;
+use App\Http\Requests\Api\Auth\UpdateProfileRequest;
 use App\Http\Resources\Common\UserResource;
 use App\Http\Resources\User\ProfileResource;
 use App\User;
@@ -51,6 +52,19 @@ class AuthController extends Controller
     function profile()
     {
         return new ProfileResource(auth()->user());
+    }
+
+    function updateProfile(UpdateProfileRequest $request)
+    {
+        if (auth()->user()->update($request->validated())) {
+            return response()->json([
+                'message' => 'Profile updated successfully.'
+            ], Response::HTTP_OK);
+        } else {
+            return response()->json([
+                'message' => 'Failed to update profile.'
+            ], Response::HTTP_BAD_REQUEST);
+        }
     }
 
     function logout()

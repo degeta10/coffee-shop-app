@@ -27,6 +27,7 @@ Route::group([
 ], function () {
     Route::get('profile', 'Api\AuthController@profile');
     Route::post('logout', 'Api\AuthController@logout');
+    Route::post('profile', 'Api\AuthController@updateProfile');
 });
 
-/* CUSOTMER PROFILE ROUTES */
+/* CUSTOMER PROFILE ROUTES */
