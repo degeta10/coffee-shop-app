@@ -81,7 +81,6 @@ class CustomerOrderTest extends TestCase
             'customer_id'   => $user->id,
             'product_id'    => $product->id,
             'quantity'      => 2,
-            'amount'        =>  $product->price * 2,
             'type'          => 'cod',
         ])->assertStatus(302);
     }
@@ -101,7 +100,6 @@ class CustomerOrderTest extends TestCase
             'customer_id'   => $user->id,
             'product_id'    => $product->id,
             'quantity'      => 2,
-            'amount'        =>  $product->price * 2,
             'type'          => 'online',
         ])->assertStatus(302);
     }
@@ -121,10 +119,9 @@ class CustomerOrderTest extends TestCase
             'customer_id'   => $user->id,
             'product_id'    => $product->id,
             'quantity'      => 2,
-            'amount'        =>  $product->price * 2,
             'type'          => 'online',
         ])->assertSessionHasErrors([
-            'amount' => 'Insufficient wallet balance.'
+            'quantity' => 'Insufficient wallet balance. Please select less quantity.'
         ]);
     }
 }
