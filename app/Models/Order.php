@@ -27,6 +27,19 @@ class Order extends Model
         });
     }
 
+    public function scopeListForCustomer($query)
+    {
+        return $query->select(
+            'id',
+            'product_id',
+            'created_at',
+            'order_no',
+            'quantity',
+            'type',
+            'amount',
+        );
+    }
+
     /**
      * Get the customer that owns the Order
      *

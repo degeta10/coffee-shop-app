@@ -27,15 +27,16 @@ class CustomerOrderController extends Controller
      */
     public function search(Request $request)
     {
-        $query = Order::where('customer_id', auth()->user()->id);
+        $query = Order::ListForCustomer()->with(['product' => function ($q) {
+            $q->select('id', 'title');
+        }])->where('customer_id', auth()->user()->id);
         $query->when(request('search_key', false), function ($q, $search_key) {
             return $q->whereHas('product', function ($q1) use ($search_key) {
-                $q1->where('title', "like", "%$search_key%")
-                    ->orWhere('quantity', 'like', "%$search_key%")
-                    ->orWhere('amount', 'like', "%$search_key%");
-            });
+                $q1->where('title', "like", "%$search_key%");
+            })->orWhere('quantity', 'like', "%$search_key%")
+                ->orWhere('amount', 'like', "%$search_key%");
         });
-        $orders = $query->orderBy('id', 'desc')->paginate(5);
+        $orders = $query->orderBy('date_of_order', 'desc')->paginate(5);
         return view('orders.listing.list', compact('orders'));
     }
 
