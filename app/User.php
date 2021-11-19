@@ -11,10 +11,11 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
 use Bavix\Wallet\Traits\HasWalletFloat;
 use Bavix\Wallet\Interfaces\Wallet;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements Wallet
 {
-    use Notifiable, HasRoles, HasWalletFloat;
+    use Notifiable, HasRoles, HasWalletFloat, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -41,6 +42,7 @@ class User extends Authenticatable implements Wallet
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'dob' => 'date',
     ];
 
     public function setPasswordAttribute($value)

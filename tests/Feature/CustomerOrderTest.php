@@ -74,7 +74,6 @@ class CustomerOrderTest extends TestCase
      */
     public function test_customer_can_place_order_with_cod()
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create()->assignRole('customer');
         $this->actingAs($user)->withoutMiddleware(VerifyCsrfToken::class);
         $product = factory(Product::class)->create(['title' => 'test product']);

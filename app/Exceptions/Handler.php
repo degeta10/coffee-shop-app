@@ -2,11 +2,16 @@
 
 namespace App\Exceptions;
 
+use App\Traits\ExceptionTrait;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    use ExceptionTrait;
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -50,6 +55,15 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($request->expectsJson()) {
+            return $this->apiException($request, $exception);
+        }
+
+        if ($exception instanceof AuthenticationException) {
+            return response()->json([
+                'errors' => 'Unauthenticated'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
         return parent::render($request, $exception);
     }
 }
