@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Customer;
+namespace App\Http\Requests\Api\Customer;
 
-use App\Rules\CheckOrderFromWalletBalance;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\JsonResponse;
 
-class PlaceOrder extends FormRequest
+class UpdateOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,13 +29,16 @@ class PlaceOrder extends FormRequest
     {
         return [
             'product_id'    => ['required', 'integer', 'exists:products,id'],
-            'quantity'      => ['required', 'integer', 'min:1', 'max:100', new CheckOrderFromWalletBalance],
+            'quantity'      => ['required', 'integer', 'min:1', 'max:100'],
             'type'          => ['required', 'in:cod,online']
         ];
     }
 
     protected function failedValidation(Validator $validator)
     {
-        return Redirect::back()->withInput()->withErrors($validator);
+        $errors = (new ValidationException($validator))->errors();
+        throw new HttpResponseException(response()->json([
+            'errors' => $errors
+        ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

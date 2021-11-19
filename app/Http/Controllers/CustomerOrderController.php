@@ -58,11 +58,15 @@ class CustomerOrderController extends Controller
      */
     public function store(PlaceOrder $request)
     {
-        if ($order = auth()->user()->orders()->create($request->validated())) {
+        $data = $request->validated();
+        $product = Product::find($data['product_id']);
+        $data = $data + ['amount' => $product->price * $data['quantity']];
+
+        if ($order = auth()->user()->orders()->create($data)) {
             $order->order_no = "ORD-" . strtoupper(Str::random(8)) . $order->id;
             $order->update();
             if ($request['type'] == 'online') {
-                auth()->user()->withdrawFloat($request['amount']);
+                auth()->user()->withdrawFloat($data['amount']);
             }
             return redirect()->route('orders')->with('success', "Your order has been placed.");
         } else {

@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\Models\Product;
 use Illuminate\Contracts\Validation\Rule;
 
 class CheckOrderFromWalletBalance implements Rule
@@ -25,8 +26,10 @@ class CheckOrderFromWalletBalance implements Rule
      */
     public function passes($attribute, $value)
     {
-        if (request()->has('type') && request()->get('type') === 'online') {
-            return auth()->user()->balanceFloat >= $value ? true : false;
+        if (request()->has('type') && request()->get('type') === 'online' && request()->get('product_id')) {
+            $product = Product::find(request()->get('product_id'));
+            $amount = $product->price * $value;
+            return auth()->user()->balanceFloat >= $amount ? true : false;
         } else {
             return true;
         }
@@ -39,6 +42,6 @@ class CheckOrderFromWalletBalance implements Rule
      */
     public function message()
     {
-        return 'Insufficient wallet balance.';
+        return 'Insufficient wallet balance. Please select less quantity.';
     }
 }

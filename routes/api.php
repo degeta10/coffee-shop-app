@@ -30,4 +30,11 @@ Route::group([
     Route::post('profile', 'Api\AuthController@updateProfile');
 });
 
-/* CUSTOMER PROFILE ROUTES */
+/* CUSTOMER ORDER ROUTES */
+
+Route::group([
+    'middleware' => ['auth:sanctum', 'role:customer'],
+], function () {
+    Route::apiResource('order', 'Api\CustomerOrderController');
+    Route::post('order/{order}', 'Api\CustomerOrderController@cancel');
+});

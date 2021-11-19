@@ -53,8 +53,8 @@
                                     class="col-md-4 col-form-label text-md-right">{{ __('Total Amount') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="amount" type="number" class="form-control" name="amount"
-                                        value="{{ old('amount') }}" readonly>
+                                    <input id="amount" type="number" class="form-control" value="{{ old('amount') }}"
+                                        readonly>
                                 </div>
                             </div>
 
