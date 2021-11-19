@@ -34,6 +34,11 @@ class Product extends Model
         return 'slug';
     }
 
+    public function scopeCommonDropdown($query)
+    {
+        return $query->select('id', 'title', 'slug', 'price');
+    }
+
     /**
      * Get all of the orders for the Product
      *

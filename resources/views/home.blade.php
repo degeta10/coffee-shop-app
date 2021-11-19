@@ -8,13 +8,11 @@
                     <div class="card-header">{{ __('Dashboard') }}</div>
 
                     <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        {{ __('You are logged in!') }}
+                        <div class="list-group">
+                            <a href="{{ route('orders') }}" class="list-group-item list-group-item-action">My Orders</a>
+                            <a href="{{ route('orders.create') }}" class="list-group-item list-group-item-action">Place New
+                                Order</a>
+                        </div>
                     </div>
                 </div>
             </div>

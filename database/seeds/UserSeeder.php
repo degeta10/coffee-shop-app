@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Order;
 use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -36,6 +37,7 @@ class UserSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
         $customer->assignRole('customer');
+        factory(Order::class, 10)->create(['customer_id' => $customer->id]);
 
         factory(User::class, 10)->create()->each(function ($user) {
             $user->assignRole('customer');
