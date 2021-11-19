@@ -20,7 +20,6 @@ Route::post('login', 'Api\AuthController@login');
 Route::post('signup', 'Api\AuthController@signup');
 
 /* USER ROUTES */
-
 Route::group([
     'middleware' => ['auth:sanctum', 'role:customer'],
     'prefix' => 'auth'
@@ -31,7 +30,6 @@ Route::group([
 });
 
 /* CUSTOMER ORDER ROUTES */
-
 Route::group([
     'middleware' => ['auth:sanctum', 'role:customer'],
 ], function () {
@@ -40,7 +38,6 @@ Route::group([
 });
 
 /* CUSTOMER WALLET ROUTES */
-
 Route::group([
     'middleware' => ['auth:sanctum', 'role:customer'],
 ], function () {
