@@ -38,3 +38,12 @@ Route::group([
     Route::apiResource('order', 'Api\CustomerOrderController');
     Route::post('order/{order}', 'Api\CustomerOrderController@cancel');
 });
+
+/* CUSTOMER WALLET ROUTES */
+
+Route::group([
+    'middleware' => ['auth:sanctum', 'role:customer'],
+], function () {
+    Route::get('wallet', 'Api\CustomerWaletController@getBalance');
+    Route::post('wallet/update', 'Api\CustomerWaletController@update');
+});
