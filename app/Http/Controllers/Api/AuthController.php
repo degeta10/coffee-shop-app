@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Auth\LoginRequest;
 use App\Http\Requests\Api\Auth\SignupRequest;
 use App\Http\Resources\Common\UserResource;
+use App\Http\Resources\User\ProfileResource;
 use App\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -45,5 +46,18 @@ class AuthController extends Controller
                 'message' => 'Registration failed! Please try again.'
             ], Response::HTTP_CONFLICT);
         });
+    }
+
+    function profile()
+    {
+        return new ProfileResource(auth()->user());
+    }
+
+    function logout()
+    {
+        auth()->user()->currentAccessToken()->delete();
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ], Response::HTTP_OK);
     }
 }

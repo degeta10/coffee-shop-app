@@ -14,12 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/* AUTHENTICATION ROUTES */
+
 Route::post('login', 'Api\AuthController@login');
 Route::post('signup', 'Api\AuthController@signup');
 
+/* USER ROUTES */
+
 Route::group([
     'middleware' => ['auth:sanctum', 'role:customer'],
+    'prefix' => 'auth'
 ], function () {
-    // Route::post('logout', 'Api\AuthController@logout');
-    // Route::post('me', 'Api\AuthController@me');
+    Route::get('profile', 'Api\AuthController@profile');
+    Route::post('logout', 'Api\AuthController@logout');
 });
+
+/* CUSOTMER PROFILE ROUTES */
