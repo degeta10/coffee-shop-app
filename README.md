@@ -55,6 +55,10 @@ Access the app using the below credentials
     -   email: admin@coffee.com
     -   password: qwe@123
 
+## API Documentation
+
+The API documentation can be found [here](https://documenter.getpostman.com/view/3544229/UVJWqKYu).
+
 ## Todo
 
 -   Add test cases for admin routes
