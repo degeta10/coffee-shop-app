@@ -35,6 +35,11 @@
                                             Withdraw
                                         </label>
                                     </div>
+                                    @error('transaction_type')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -46,7 +51,7 @@
                                     <input id="amount" type="number" step="0.01" min="1" max="1000"
                                         class="form-control @error('amount') is-invalid @enderror" name="amount"
                                         value="{{ old('amount') }}" required>
-                                    @error('email')
+                                    @error('amount')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

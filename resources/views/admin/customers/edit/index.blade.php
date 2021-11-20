@@ -17,6 +17,11 @@
                                 <div class="col-md-6">
                                     <input id="name" name="name" type="text" class="form-control"
                                         value="{{ $customer->name }}" placeholder="Enter your name here" required>
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -43,6 +48,11 @@
                                             Female
                                         </label>
                                     </div>
+                                    @error('gender')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -51,16 +61,28 @@
                                     class="col-md-4 col-form-label text-md-right">{{ __('Date of Birth') }}</label>
                                 <div class="col-md-6">
                                     <input type="date" class="form-control" id="dob" name="dob"
-                                        placeholder="Select your date of birth" value="{{ $customer->dob->format('Y-m-d') }}" required>
+                                        placeholder="Select your date of birth"
+                                        value="{{ $customer->dob->format('Y-m-d') }}" required>
+                                    @error('dob')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}</label>
+                                <label for="phone"
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}</label>
                                 <div class="col-md-6">
                                     <input type="tel" class="form-control" id="phone" name="phone"
                                         placeholder="+(country code) number" minlength="7" maxlength="20"
                                         value="{{ $customer->phone }}" required>
+                                    @error('phone')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -71,6 +93,11 @@
                                     <textarea id="address" name="address" class="form-control" cols="30"
                                         placeholder="Type your address here"
                                         rows="10">{{ $customer->address }}</textarea>
+                                    @error('address')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-group row mb-0">

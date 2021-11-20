@@ -64,7 +64,7 @@
                                     <input id="quantity" type="number" step="1" min="1" max="1000"
                                         class="form-control @error('quantity') is-invalid @enderror" name="quantity"
                                         value="{{ $order->quantity }}" required>
-                                    @error('email')
+                                    @error('quantity')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
