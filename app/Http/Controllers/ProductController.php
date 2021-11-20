@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Admin\Product\CreateProduct;
+use App\Http\Requests\Admin\Product\UpdateProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    protected $index_route = 'admin.product.index';
+    protected $show_route = 'admin.product.show';
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +19,23 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.products.listing.index');
+    }
+
+    /**
+     * Returns a list of the resource.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function search(Request $request)
+    {
+        $query = Product::query();
+        $query->when(request('search_key', false), function ($q, $search_key) {
+            return $q->where('title', 'like', "%$search_key%")
+                ->orWhere('price', 'like', "%$search_key%");
+        });
+        $products = $query->orderBy('created_at', 'desc')->paginate(5);
+        return view('admin.products.listing.list', compact('products'));
     }
 
     /**
@@ -24,7 +45,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.products.create.index');
     }
 
     /**
@@ -33,9 +54,12 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateProduct $request)
     {
-        //
+        if ($product = Product::create($request->validated())) {
+            return redirect()->route($this->show_route, [$product])->with('success', "Product has been created.");
+        }
+        return redirect()->back()->withInput()->withErrors(['error' => 'Failed to create product.']);
     }
 
     /**
@@ -46,7 +70,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return view('admin.products.show.index', compact('product'));
     }
 
     /**
@@ -57,7 +81,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('admin.products.edit.index', compact('product'));
     }
 
     /**
@@ -67,9 +91,12 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProduct $request, Product $product)
     {
-        //
+        if ($product->update($request->validated())) {
+            return redirect()->route($this->show_route, [$product])->with('success', "Product has been updated.");
+        }
+        return redirect()->back()->withInput()->withErrors(['error' => 'Failed to update product.']);
     }
 
     /**
@@ -80,6 +107,9 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        if ($product->delete()) {
+            return redirect()->route($this->index_route)->with('success', "Product has been deleted.");
+        }
+        return redirect()->back()->withInput()->withErrors(['error' => 'Failed to delete product.']);
     }
 }

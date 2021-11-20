@@ -40,12 +40,17 @@ Route::group(['middleware' => ['auth', 'role:customer']], function () {
 Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/home', 'HomeController@admin')->name('home');
 
+    /* ORDER ROUTES */
     Route::post('/order/search', 'OrderController@search')->name('order.search');
     Route::post('/order/{order}/cancel', 'OrderController@cancel')->name('order.cancel');
     Route::post('/order/{order}/deliver', 'OrderController@deliver')->name('order.deliver');
     Route::resource('order', 'OrderController');
 
+    /* PRODUCT ROUTES */
+    Route::post('/product/search', 'ProductController@search')->name('product.search');
     Route::resource('product', 'ProductController');
+
+    /* CUSTOMER ROUTES */
     Route::post('/customer/search', 'CustomerController@search')->name('customer.search');
     Route::resource('customer', 'CustomerController');
 });
