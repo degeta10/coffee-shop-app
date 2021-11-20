@@ -39,6 +39,9 @@ Route::group(['middleware' => ['auth', 'role:customer']], function () {
 /* ADMIN ROUTES */
 Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/home', 'HomeController@admin')->name('home');
+    Route::post('/order/search', 'OrderController@search')->name('order.search');
+    Route::post('/order/{order}/cancel', 'OrderController@cancel')->name('order.cancel');
+    Route::post('/order/{order}/deliver', 'OrderController@deliver')->name('order.deliver');
     Route::resource('order', 'OrderController');
     Route::resource('product', 'OrderController');
     Route::resource('customer', 'OrderController');

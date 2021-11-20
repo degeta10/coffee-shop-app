@@ -1,15 +1,38 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Place New Order') }}</div>
+                    <div class="card-header">{{ __('Create New Order') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('orders.store') }}">
+                        <form method="POST" action="{{ route('admin.order.store') }}">
                             @csrf
+
+                            <div class="form-group row">
+                                <label for="current_balance"
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Customer') }}</label>
+                                <div class="col-md-6">
+                                    <select name="customer_id" id="customer_id" title="Select One"
+                                        class="form-control @error('customer_id') is-invalid @enderror" required>
+                                        <option value="">Choose One</option>
+                                        @foreach ($customers as $customer)
+                                            <option value="{{ $customer->id }}"
+                                                data-balance="{{ $customer->balanceFloat }}"
+                                                {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
+                                                {{ $customer->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('customer_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <div class="form-group row">
                                 <label for="current_balance"
                                     class="col-md-4 col-form-label text-md-right">{{ __('Product') }}</label>
@@ -63,8 +86,7 @@
                                     class="col-md-4 col-form-label text-md-right">{{ __('Wallet balance') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="balance" type="number" class="form-control"
-                                        value="{{ auth()->user()->balanceFloat }}" readonly>
+                                    <input id="balance" type="number" class="form-control" value="0" readonly>
                                 </div>
                             </div>
 
@@ -79,7 +101,8 @@
                                             @endif
                                             @if (old('type') == '')
                                                 checked
-                                            @endif>
+                                            @endif
+                                            >
                                             Cash On Delivery
                                         </label>
                                         <label class="btn btn-secondary">
@@ -131,10 +154,12 @@
         });
 
         $('input[name="type"]').on('change', function(e) {
+            var balance = $('#customer_id :selected').data('balance');
             if ($(this).val() == 'cod') {
                 $('.wallet-balance').addClass('d-none');
             } else {
                 $('.wallet-balance').removeClass('d-none');
+                $('#balance').val(balance);
             }
         });
     </script>

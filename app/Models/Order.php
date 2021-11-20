@@ -32,11 +32,28 @@ class Order extends Model
         return $query->select(
             'id',
             'product_id',
-            'created_at',
+            'date_of_order',
             'order_no',
             'quantity',
             'type',
             'amount',
+            'status',
+        );
+    }
+
+    public function scopeListForAdmin($query)
+    {
+        return $query->select(
+            'id',
+            'product_id',
+            'order_no',
+            'quantity',
+            'type',
+            'amount',
+            'status',
+            'date_of_order',
+            'date_of_delivery',
+            'date_of_cancellation',
         );
     }
 
