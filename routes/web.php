@@ -37,6 +37,9 @@ Route::group(['middleware' => ['auth', 'role:customer']], function () {
 
 
 /* ADMIN ROUTES */
-Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin'], function () {
-    Route::get('/home', 'HomeController@admin')->name('admin.home');
+Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('/home', 'HomeController@admin')->name('home');
+    Route::resource('order', 'OrderController');
+    Route::resource('product', 'OrderController');
+    Route::resource('customer', 'OrderController');
 });

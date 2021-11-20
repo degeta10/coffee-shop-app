@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
     <div class="container">
@@ -8,13 +8,14 @@
                     <div class="card-header">{{ __('Dashboard') }}</div>
 
                     <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        {{ __('You are logged in!') }}
+                        <div class="list-group">
+                            <a href="{{ route('admin.order.index') }}"
+                                class="list-group-item list-group-item-action">Orders</a>
+                            <a href="{{ route('admin.product.index') }}"
+                                class="list-group-item list-group-item-action">Products</a>
+                            <a href="{{ route('admin.customer.index') }}"
+                                class="list-group-item list-group-item-action">Customers</a>
+                        </div>
                     </div>
                 </div>
             </div>
