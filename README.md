@@ -28,11 +28,11 @@ Below are the modules:
 -   Run `npm run dev` to compile all assets
 -   Create 2 databases. One for the app and one for testing purposes.
 -   Copy `.example.env` file and rename it to **.env**
--   Make sure the database credentials are updated in **.env** file
+-   Make sure the database credentials are updated in **.env** file (Both databases must have same username & password)
 -   Update the testing database's name at `DB_TEST_DATABASE` in .env file
 -   Run `php artisan key:generate` to generate app key
 -   Run `php artisan config:cache`
--   Run `composer update` to update all dependencies to latest
+-   Run `composer update` to update all dependencies to latest (OPTIONAL)
 -   Run `php artisan config:clear`
 -   Run `php artisan test` to perform all the tests
 -   Run `php artisan optimize` to optimize the whole app
