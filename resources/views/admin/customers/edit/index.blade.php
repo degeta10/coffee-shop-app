@@ -1,14 +1,14 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('My Profile') }}</div>
+                    <div class="card-header">{{ __('Edit Customer') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('account.profile.update') }}">
+                        <form method="POST" action="{{ route('admin.customer.update', [$customer]) }}">
                             @csrf
                             @method('PATCH')
 
@@ -16,14 +16,14 @@
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
                                 <div class="col-md-6">
                                     <input id="name" name="name" type="text" class="form-control"
-                                        value="{{ $user->name }}" placeholder="Enter your name here" required>
+                                        value="{{ $customer->name }}" placeholder="Enter your name here" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" value="{{ $user->email }}"
+                                    <input id="email" type="email" class="form-control" value="{{ $customer->email }}"
                                         readonly>
                                 </div>
                             </div>
@@ -34,12 +34,12 @@
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                         <label class="btn btn-secondary active">
                                             <input type="radio" name="gender" id="option1" autocomplete="off" value="male"
-                                                @if ($user->gender == 'male') checked @endif>
+                                                @if ($customer->gender == 'male') checked @endif>
                                             Male
                                         </label>
                                         <label class="btn btn-secondary">
                                             <input type="radio" name="gender" id="option2" autocomplete="off" value="female"
-                                                @if ($user->gender == 'female') checked @endif>
+                                                @if ($customer->gender == 'female') checked @endif>
                                             Female
                                         </label>
                                     </div>
@@ -51,7 +51,7 @@
                                     class="col-md-4 col-form-label text-md-right">{{ __('Date of Birth') }}</label>
                                 <div class="col-md-6">
                                     <input type="date" class="form-control" id="dob" name="dob"
-                                        placeholder="Select your date of birth" value="{{ $user->dob->format('Y-m-d') }}" required>
+                                        placeholder="Select your date of birth" value="{{ $customer->dob->format('Y-m-d') }}" required>
                                 </div>
                             </div>
 
@@ -60,7 +60,7 @@
                                 <div class="col-md-6">
                                     <input type="tel" class="form-control" id="phone" name="phone"
                                         placeholder="+(country code) number" minlength="7" maxlength="20"
-                                        value="{{ $user->phone }}" required>
+                                        value="{{ $customer->phone }}" required>
                                 </div>
                             </div>
 
@@ -69,10 +69,10 @@
                                     class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
                                 <div class="col-md-6">
                                     <textarea id="address" name="address" class="form-control" cols="30"
-                                        placeholder="Type your address here" rows="10">{{ $user->address }}</textarea>
+                                        placeholder="Type your address here"
+                                        rows="10">{{ $customer->address }}</textarea>
                                 </div>
                             </div>
-
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Admin\Customer\CreateOrder;
-use App\Http\Requests\Admin\Customer\UpdateOrder;
+use App\Http\Requests\Admin\Order\CreateOrder;
+use App\Http\Requests\Admin\Order\UpdateOrder;
 use App\Models\Order;
 use App\Models\Product;
 use App\User;

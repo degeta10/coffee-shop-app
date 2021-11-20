@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Customer;
+namespace App\Http\Requests\Admin\Order;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Redirect;
 
-class UpdateProfile extends FormRequest
+class UpdateOrder extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,11 +26,10 @@ class UpdateProfile extends FormRequest
     public function rules()
     {
         return [
-            'name'          => ['required', 'max:180'],
-            'gender'        => ['required', 'in:male,female'],
-            'dob'           => ['required', 'date', 'date_format:Y-m-d'],
-            'phone'         => ['required', 'min:7', 'max:20'],
-            'address'       => ['required'],
+            'customer_id'   => ['required', 'integer', 'exists:users,id'],
+            'product_id'    => ['required', 'integer', 'exists:products,id'],
+            'quantity'      => ['required', 'integer', 'min:1', 'max:100'],
+            'type'          => ['required', 'in:cod,online']
         ];
     }
 

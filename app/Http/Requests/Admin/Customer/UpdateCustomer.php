@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests\Admin\Customer;
 
-use App\Rules\CheckOrderFromWalletBalanceForCustomer;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Redirect;
 
-class CreateOrder extends FormRequest
+class UpdateCustomer extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,10 +26,11 @@ class CreateOrder extends FormRequest
     public function rules()
     {
         return [
-            'customer_id'   => ['required', 'integer', 'exists:users,id'],
-            'product_id'    => ['required', 'integer', 'exists:products,id'],
-            'quantity'      => ['required', 'integer', 'min:1', 'max:100', new CheckOrderFromWalletBalanceForCustomer],
-            'type'          => ['required', 'in:cod,online']
+            'name'          => ['required', 'max:180'],
+            'gender'        => ['required', 'in:male,female'],
+            'dob'           => ['required', 'date', 'date_format:Y-m-d'],
+            'phone'         => ['required', 'min:7', 'max:20'],
+            'address'       => ['required'],
         ];
     }
 
