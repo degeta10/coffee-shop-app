@@ -5,6 +5,8 @@ namespace App\Traits;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
+use Spatie\Permission\Exceptions\UnauthorizedException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 trait ExceptionTrait
@@ -17,6 +19,10 @@ trait ExceptionTrait
 
         if ($this->isModel($e)) {
             return $this->ModelResponse($e);
+        }
+
+        if ($this->isForbidden($e)) {
+            return $this->ForbiddenResponse($e);
         }
 
         if ($this->isHttp($e)) {
@@ -41,6 +47,11 @@ trait ExceptionTrait
         return $e instanceof NotFoundHttpException;
     }
 
+    protected function isForbidden($e)
+    {
+        return $e instanceof UnauthorizedException;
+    }
+
     protected function AuthResponse($e)
     {
         return response()->json([
@@ -60,5 +71,12 @@ trait ExceptionTrait
         return response()->json([
             'errors' => 'Incorrect route'
         ], Response::HTTP_NOT_FOUND);
+    }
+
+    protected function ForbiddenResponse($e)
+    {
+        return response()->json([
+            'errors' => 'You do not have permissions to access this route'
+        ], Response::HTTP_FORBIDDEN);
     }
 }

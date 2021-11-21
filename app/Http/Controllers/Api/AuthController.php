@@ -38,7 +38,8 @@ class AuthController extends Controller
     function signup(SignupRequest $request)
     {
         return DB::transaction(function () use ($request) {
-            if (User::create($request->validated())) {
+            if ($user = User::create($request->validated())) {
+                $user->assignRole('customer');
                 return response()->json([
                     'message' => 'You have successfully registered!'
                 ], Response::HTTP_OK);
