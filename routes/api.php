@@ -33,7 +33,7 @@ Route::group([
 Route::group([
     'middleware' => ['auth:sanctum', 'role:customer'],
 ], function () {
-    Route::apiResource('order', 'Api\CustomerOrderController');
+    Route::apiResource('order', 'Api\CustomerOrderController', ['only' => ['index', 'store', 'show', 'update', 'cancel']]);
     Route::post('order/{order}', 'Api\CustomerOrderController@cancel');
 });
 
